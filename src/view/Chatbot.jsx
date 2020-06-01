@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'antd';
+import axios from "axios";
 const { TextArea } = Input;
 
 export class Chatbot extends Component {
@@ -16,13 +17,13 @@ export class Chatbot extends Component {
     handleInputChange(event) {
         this.setState({input: event.target.value})
     }
-    handleInputPressEnter() {
+    async handleInputPressEnter() {
         const {input, conversation} = this.state;
 
         const newConversation =
             conversation +
             `You: ${input}\n` +
-            `AI: ${getAIResponse(input)}\n`;
+            `AI: ${await getAIResponse(input)}\n`;
 
         this.setState({
             input: '',
@@ -57,7 +58,7 @@ export class Chatbot extends Component {
 const inputPlaceholder = 'Try: How are you?';
 const conversationPlaceholder = 'Conversation will be recorded here';
 
-function getAIResponse(input) {
-    // TODO: fill in AI logic
-    return input.replace('?', '!');
+async function getAIResponse(input) {
+    const response = await axios.get(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}`);
+    return response.data;
 }

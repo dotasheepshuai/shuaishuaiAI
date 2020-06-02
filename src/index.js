@@ -4,8 +4,6 @@ import './index.css';
 import App from './view/App';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App title={'My AI Girlfriend'} />,
+    document.getElementById('root')
 );

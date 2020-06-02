@@ -9,7 +9,7 @@ export default class App extends Component {
         return (
             <div>
                 <h1>{title}</h1>
-                <p>Welcome to {title} v0.2</p>
+                <p>Welcome to {title} v0.3</p>
                 <Chatbot />
                 <hr/>
                 <Releases />

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Input, Typography, Button, Space, Row, Col } from 'antd';
+import { Input, Typography, Button, message, Row, Col } from 'antd';
 import axios from "axios";
-const { TextArea } = Input;
-const { Text } = Typography;
+const { TextArea, Search } = Input;
+const { Paragraph } = Typography;
 
 export class Chatbot extends Component {
     constructor(props) {
@@ -53,6 +53,7 @@ export class Chatbot extends Component {
             insteadSayInput: '',
             conversation: `${conversation}You: ${inputCopy}\nAI: ${insteadSayInput}\n`
         });
+        message.success(`Remembered to reply "${insteadSayInput}" for question "${inputCopy}"`);
     }
 
     render() {
@@ -60,35 +61,37 @@ export class Chatbot extends Component {
         return (
             <div>
                 <Row>
-                    <Col span={12}>
-                        <Input
+                    <Col sm={14} md={10} lg={6}>
+                        <Search
                             value={input}
                             onChange={this.handleInputChange}
                             onPressEnter={this.handleInputPressEnter}
+                            onSearch={this.handleInputPressEnter}
                             placeholder={inputPlaceholder}
                             prefix={'> '}
+                            enterButton
                         />
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={6}>
-                        <Text>You: {inputCopy}</Text>
+                    <Col span={24}>
+                        <Paragraph style={{paddingTop:'14px'}}>You: {inputCopy}</Paragraph>
+                        <Paragraph>AI: {output}</Paragraph>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={6}>
-                        <Space>
-                            <Text>AI: {output}</Text>
-                            {output && <Button type="primary" onClick={() => this.setState({insteadSayInputVisible: true})}>Instead, say...</Button>}
-                        </Space>
+                    <Col sm={12} md={12} lg={10}>
+                        {output && <Button type="primary" onClick={() => this.setState({insteadSayInputVisible: true})}>Instead, say...</Button>}
                     </Col>
-                    <Col span={6}>
-                        {insteadSayInputVisible && <Input
+                    <Col sm={12} md={12} lg={10}>
+                        {insteadSayInputVisible && <Search
                             value={insteadSayInput}
                             onChange={this.handleInsteadSayInputChange}
                             onPressEnter={this.handleInsteadSayInputPressEnter}
+                            onSearch={this.handleInsteadSayInputPressEnter}
                             placeholder={insteadSayInputPlaceholder}
                             prefix={'> '}
+                            enterButton
                         />}
                     </Col>
                 </Row>
@@ -97,7 +100,7 @@ export class Chatbot extends Component {
                     <Col span={24}>
                         <TextArea
                             value={conversation}
-                            autoSize={{minRows: 20}}
+                            autoSize={{minRows: 10}}
                             placeholder={conversationPlaceholder}
                             readOnly={true}
                             rows={20}
@@ -110,8 +113,8 @@ export class Chatbot extends Component {
 }
 
 const inputPlaceholder = 'Try: How are you?';
-const insteadSayInputPlaceholder = 'Type in what instead say, and hit ENTER';
-const conversationPlaceholder = 'Conversation will be recorded here';
+const insteadSayInputPlaceholder = 'Type in what instead say';
+const conversationPlaceholder = 'Conversations will be recorded here';
 
 async function getAIResponse(input) {
     const response = await axios.get(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}`);

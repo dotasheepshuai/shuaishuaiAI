@@ -10,19 +10,19 @@ export class Releases extends Component {
                 <Title level={3}>Releases</Title>
                 <Timeline>
                     <Timeline.Item color='green'>
-                        v0.1 Add input box and dummy logic to handle input
+                        v0.1 (2020/05/31) Add input box and dummy logic to handle input
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.2 Pass input to backend API, which queries against DynamoDB for AI response
+                        v0.2 (2020/05/31) Pass input to backend API, which queries against DynamoDB for AI response
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.3 Add training functionality to let AI evolve
+                        v0.3 (2020/06/01) Add training functionality to let AI evolve
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.4 UI improvements and sponsor page
+                        v0.4 (2020/06/03) UI improvements and sponsor page
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.5 Remove answers by clicking dislike button
+                        v0.5 (2020/06/05) Remove answers by clicking dislike button
                     </Timeline.Item>
                     <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
                         v0.6 Add sleep mode and in-typing functionality to emulate human

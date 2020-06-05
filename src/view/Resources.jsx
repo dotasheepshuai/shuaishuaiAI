@@ -7,11 +7,21 @@ export class Resources extends Component {
         return (
             <div>
                 <Title level={3}>Resources</Title>
-                <Paragraph><Text strong>Intro</Text> <a href={introLink}>{introLink}</a></Paragraph>
-                <Paragraph><Text strong>Slack</Text> (main campus) <a href={slackLink}>{slackLink}</a></Paragraph>
-                <Paragraph><Text strong>Trello</Text> (task management) <a href={trelloLink}>{trelloLink}</a></Paragraph>
-                <Paragraph><Text strong>Github</Text> (version control)  <a href={githubLink}>{githubLink}</a> <a href={githubLinkBackend}>{githubLinkBackend}</a></Paragraph>
-                <Paragraph><Text strong>AWS</Text> (service host) tianyangliu921217@gmail.com</Paragraph>
+                <Paragraph>
+                    <Text strong>Intro</Text> <SimpleLink link={introLink} />
+                </Paragraph>
+                <Paragraph>
+                    <Text strong>Slack</Text> (team) <SimpleLink link={slackLink} />
+                </Paragraph>
+                <Paragraph>
+                    <Text strong>Trello</Text> (task management) <SimpleLink link={trelloLink} />
+                </Paragraph>
+                <Paragraph>
+                    <Text strong>Github</Text> (version control) <SimpleLink link={githubLink} /> <SimpleLink link={githubLinkBackend} />
+                </Paragraph>
+                <Paragraph>
+                    <Text strong>AWS</Text> (service) tianyangliu921217@gmail.com
+                </Paragraph>
             </div>
         );
     }
@@ -22,3 +32,10 @@ const slackLink = 'https://app.slack.com/client/T014EFMBLKW/D0146V1E821';
 const trelloLink = 'https://trello.com/b/kmKYR0jp/shuaishuaiai';
 const githubLink = 'https://github.com/dotasheepshuai/shuaishuaiAI';
 const githubLinkBackend = 'https://github.com/dotasheepshuai/shuaishuaiAI-backend';
+
+class SimpleLink extends Component {
+    render() {
+        const {link} = this.props;
+        return <a href={link} target='_blank' rel='noopener noreferrer'>{link}</a>;
+    }
+}

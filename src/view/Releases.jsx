@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Timeline, Typography } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 
 export class Releases extends Component {
@@ -13,7 +13,7 @@ export class Releases extends Component {
                         v0.1 Add input box and dummy logic to handle input
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.2 Pass input to backend API, which queries against dynamoDB for AI response
+                        v0.2 Pass input to backend API, which queries against DynamoDB for AI response
                     </Timeline.Item>
                     <Timeline.Item color='green'>
                         v0.3 Add training functionality to let AI evolve
@@ -21,17 +21,23 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         v0.4 UI improvements and sponsor page
                     </Timeline.Item>
-                    <Timeline.Item dot={<SyncOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.5 Add sleep mode and in-typing functionality to emulate human
+                    <Timeline.Item color='green'>
+                        v0.5 Remove answers by clicking dislike button
+                    </Timeline.Item>
+                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
+                        v0.6 Add sleep mode and in-typing functionality to emulate human
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
-                        v0.6 Choose closest question's answers as AI response
+                        v0.7 Add music component
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
-                        v0.7 Conversation export functionality
+                        v0.8 Choose closest question's answers as AI response
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
-                        v0.8 Add blacklisted words to emulate human behavior
+                        v0.9 Conversation export functionality
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        v0.10 Add blacklisted words to emulate human behavior
                     </Timeline.Item>
                 </Timeline>
             </div>

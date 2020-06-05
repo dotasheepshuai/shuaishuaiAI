@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
-import { AudioTwoTone, ClockCircleOutlined, FolderOpenOutlined, DollarTwoTone } from '@ant-design/icons';
+import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
 import {Releases} from './Releases';
@@ -35,7 +35,7 @@ export default class App extends Component {
                         <Menu.Item key='Chatbot' icon={<AudioTwoTone style={{fontSize:'20px'}} />}>
                             Chatbot
                         </Menu.Item>
-                        <Menu.Item key='Releases' icon={<ClockCircleOutlined style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Releases' icon={<HistoryOutlined style={{fontSize:'20px'}} />}>
                             Releases
                         </Menu.Item>
                         <Menu.Item key='Resources' icon={<FolderOpenOutlined style={{fontSize:'20px'}} />}>
@@ -63,7 +63,7 @@ export default class App extends Component {
                     </Content>
                     <Footer style={{textAlign:'center'}}>
                         <div>
-                            <img src={'shawn.jpeg'} width='100' alt={'shawn the sheep'} />
+                            <img src={'shaun.jpeg'} width='100' alt={'shaun the sheep'} />
                         </div>
                         <div>
                             ShuaishuaiAI 2020

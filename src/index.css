@@ -9,3 +9,7 @@ body {
 .ant-timeline-item-tail {
   border-left-color: black;
 }
+
+.ant-timeline-item-head-custom {
+  padding: 0;
+}

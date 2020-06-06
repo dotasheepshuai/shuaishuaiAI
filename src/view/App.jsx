@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Card, Row, Col } from 'antd';
 import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
@@ -14,6 +14,9 @@ export default class App extends Component {
             navigationKey: 'Chatbot'
         };
         this.handleNavigationChange = this.handleNavigationChange.bind(this);
+    }
+    componentDidMount() {
+        document.getElementById("MySecret").volume = 0.1;
     }
     handleNavigationChange(event) {
         this.setState({navigationKey: event.key});
@@ -61,13 +64,24 @@ export default class App extends Component {
                             }
                         </div>
                     </Content>
-                    <Footer style={{textAlign:'center'}}>
-                        <div>
-                            <img src={'shaun.jpeg'} width='100' alt={'shaun the sheep'} />
-                        </div>
-                        <div>
-                            ShuaishuaiAI 2020
-                        </div>
+                    <Footer>
+                        <Row>
+                            <Col span={8}>
+                                <Card title={'My Secret - G.E.M'} style={{width:'326px',height:'114px'}}>
+                                    <audio id='MySecret' controls autoPlay={true} loop={true} src='MySecret.mp3' />
+                                </Card>
+                            </Col>
+                            <Col span={8}>
+                                <div style={{textAlign:'center'}}>
+                                    <div>
+                                        <img src={'shaun.jpeg'} height='100' alt={'shaun the sheep'} />
+                                    </div>
+                                    <div>
+                                        ShuaishuaiAI 2020
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
                     </Footer>
                 </Layout>
             </Layout>

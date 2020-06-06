@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Typography, Button, message, Row, Col, Spin } from 'antd';
+import { Input, Typography, Button, message, Row, Col, Spin, Empty } from 'antd';
 import { DislikeTwoTone } from '@ant-design/icons';
-import axios from "axios";
+import moment from 'moment';
+import {random} from 'lodash';
+import axios from 'axios';
 const { TextArea, Search } = Input;
 const { Paragraph } = Typography;
 
@@ -13,15 +15,29 @@ export class Chatbot extends Component {
             input: '',
             inputCopy: '',
             output: '',
-            insteadSayInputVisible: false,
-            insteadSayInput: '',
-            conversation: ''
+            canAlsoReplyInputVisible: false,
+            canAlsoReplyInput: '',
+            conversation: '',
+            mode: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleInputPressEnter = this.handleInputPressEnter.bind(this);
-        this.handleInsteadSayInputChange = this.handleInsteadSayInputChange.bind(this);
-        this.handleInsteadSayInputPressEnter = this.handleInsteadSayInputPressEnter.bind(this);
+        this.handleCanAlsoReplyInputChange = this.handleCanAlsoReplyInputChange.bind(this);
+        this.handleCanAlsoReplyInputPressEnter = this.handleCanAlsoReplyInputPressEnter.bind(this);
         this.handleDislikeButtonClick = this.handleDislikeButtonClick.bind(this);
+    }
+
+    componentDidMount() {
+        this.checkMode();
+        setInterval(() => this.checkMode(), 10000);
+    }
+    checkMode() {
+        const currentHourUtc = moment.utc().hour();
+        if (currentHourUtc >= 12 || currentHourUtc < 2) {
+            this.setState({mode: 'day'});
+        } else {
+            this.setState({mode: 'night'});
+        }
     }
 
     handleInputChange(event) {
@@ -32,45 +48,55 @@ export class Chatbot extends Component {
         if (! input) {
             return;
         }
-        this.setState({isLoading: true});
+        this.setState({isLoading: true, input: '', inputCopy: input, output: ''});
+        await this.mockTypingIn();
         const output = await getAIResponse(input);
 
         this.setState({
             isLoading: false,
-            input: '',
-            inputCopy: input,
             output: output,
-            insteadSayInputVisible: false,
-            insteadSayInput: '',
+            canAlsoReplyInputVisible: false,
+            canAlsoReplyInput: '',
             conversation: `${conversation}You: ${input}\nShuaishuai: ${output}\n`
         });
     }
+    async mockTypingIn() {
+        let output = 'Typing in';
+        this.setState({output});
 
-    handleInsteadSayInputChange(event) {
-        this.setState({insteadSayInput: event.target.value})
+        const numberOfDots = random(3, 6);
+        for (let i=0; i<numberOfDots; i++) {
+            await sleep();
+            output = output + '.';
+            this.setState({output});
+        }
     }
-    async handleInsteadSayInputPressEnter() {
-        const {inputCopy, insteadSayInput, conversation} = this.state;
-        if (! (inputCopy && insteadSayInput)) {
+
+    handleCanAlsoReplyInputChange(event) {
+        this.setState({canAlsoReplyInput: event.target.value})
+    }
+    async handleCanAlsoReplyInputPressEnter() {
+        const {inputCopy, canAlsoReplyInput, conversation} = this.state;
+        if (! (inputCopy && canAlsoReplyInput)) {
             return;
         }
         this.setState({isLoading: true});
-        await setAIResponse(inputCopy, insteadSayInput);
+        await setAIResponse(inputCopy, canAlsoReplyInput);
 
         this.setState({
             isLoading: false,
             input: '',
             inputCopy: '',
             output: '',
-            insteadSayInputVisible: false,
-            insteadSayInput: '',
-            conversation: `${conversation}You: ${inputCopy}\nShuaishuai: ${insteadSayInput}\n`
+            canAlsoReplyInputVisible: false,
+            canAlsoReplyInput: '',
+            conversation: `${conversation}You: ${inputCopy}\nShuaishuai: ${canAlsoReplyInput}\n`
         });
-        message.success(`Remembered to reply "${insteadSayInput}" for question "${inputCopy}"`);
+        message.success(`Remembered to reply "${canAlsoReplyInput}" for question "${inputCopy}"`);
     }
 
     async handleDislikeButtonClick() {
-        const {inputCopy, output, conversation} = this.state;
+        const {inputCopy, output} = this.state;
         if (! (inputCopy && output)) {
             return;
         }
@@ -82,15 +108,25 @@ export class Chatbot extends Component {
             input: '',
             inputCopy: '',
             output: '',
-            insteadSayInputVisible: false,
-            insteadSayInput: '',
-            conversation: conversation
+            canAlsoReplyInputVisible: false,
+            canAlsoReplyInput: ''
         });
         message.success(`Forgot answer "${output}" for question "${inputCopy}"`);
     }
 
     render() {
-        const {isLoading, input, inputCopy, output, insteadSayInputVisible, insteadSayInput, conversation} = this.state;
+        const {isLoading, input, inputCopy, output, canAlsoReplyInputVisible, canAlsoReplyInput, conversation, mode} = this.state;
+
+        if (mode === 'night') {
+            return (
+                <Empty
+                    image={'sleep.gif'}
+                    imageStyle={{height:160}}
+                    description={<span style={{fontSize:'14px'}}>Shuaishuai is sleeping now. She will be available daily 8:00-22:00 EST</span>}
+                />
+            );
+        }
+
         return (
             <div>
                 <Spin spinning={isLoading} size={'large'}>
@@ -112,7 +148,7 @@ export class Chatbot extends Component {
                             <Paragraph style={{paddingTop:'14px'}}>You: {inputCopy}</Paragraph>
                             <Paragraph>
                                 Shuaishuai: {output}
-                                {output && <Button
+                                {output && (! output.startsWith('Typing in')) && <Button
                                     type='link'
                                     icon={<DislikeTwoTone twoToneColor={'#FF0000'} style={{fontSize:'20px'}} />}
                                     style={{paddingLeft:'14px'}}
@@ -123,15 +159,15 @@ export class Chatbot extends Component {
                     </Row>
                     <Row gutter={16}>
                         <Col span={8}>
-                            {output && <Button type="primary" onClick={() => this.setState({insteadSayInputVisible: true})}>Instead say...</Button>}
+                            {output && (! output.startsWith('Typing in')) && <Button type='primary' onClick={() => this.setState({canAlsoReplyInputVisible: true})}>Can also reply...</Button>}
                         </Col>
                         <Col sm={14} md={12} lg={10}>
-                            {insteadSayInputVisible && <Search
-                                value={insteadSayInput}
-                                onChange={this.handleInsteadSayInputChange}
-                                onPressEnter={this.handleInsteadSayInputPressEnter}
-                                onSearch={this.handleInsteadSayInputPressEnter}
-                                placeholder={insteadSayInputPlaceholder}
+                            {canAlsoReplyInputVisible && <Search
+                                value={canAlsoReplyInput}
+                                onChange={this.handleCanAlsoReplyInputChange}
+                                onPressEnter={this.handleCanAlsoReplyInputPressEnter}
+                                onSearch={this.handleCanAlsoReplyInputPressEnter}
+                                placeholder={canAlsoReplyInputPlaceholder}
                                 prefix={'> '}
                                 enterButton
                             />}
@@ -156,7 +192,7 @@ export class Chatbot extends Component {
 }
 
 const inputPlaceholder = 'Try: How are you?';
-const insteadSayInputPlaceholder = 'Type in what to say instead';
+const canAlsoReplyInputPlaceholder = 'Type in what to reply';
 const conversationPlaceholder = 'Conversations will be recorded here';
 
 async function getAIResponse(input) {
@@ -170,4 +206,8 @@ async function setAIResponse(input, output) {
 
 async function forgetAIResponse(input, output) {
     return await axios.delete(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}&output=${output}`)
+}
+
+async function sleep() {
+    return await new Promise((resolve) => setTimeout(() => resolve(), 200));
 }

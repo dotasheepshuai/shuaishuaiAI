@@ -25,12 +25,12 @@ export class Releases extends Component {
                         v0.5 (2020/06/05) Remove answers by clicking dislike button
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        v0.6 Add sleep mode and in-typing functionality to emulate human
+                        v0.6 (2020/06/05) Add sleep mode and in-typing functionality to emulate human
+                    </Timeline.Item>
+                    <Timeline.Item color='green'>
+                        v0.7 (2020/06/05) Add music component
                     </Timeline.Item>
                     <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.7 Add music component
-                    </Timeline.Item>
-                    <Timeline.Item color='grey'>
                         v0.8 Choose closest question's answers as AI response
                     </Timeline.Item>
                     <Timeline.Item color='grey'>

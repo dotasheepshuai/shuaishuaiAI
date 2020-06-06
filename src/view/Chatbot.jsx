@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Typography, Button, message, Row, Col, Spin, Empty } from 'antd';
+import { Input, Typography, Button, message, Row, Col, Spin, Empty, Card } from 'antd';
 import { DislikeTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import {random} from 'lodash';
@@ -30,6 +30,7 @@ export class Chatbot extends Component {
     componentDidMount() {
         this.checkMode();
         setInterval(() => this.checkMode(), 10000);
+        document.getElementById("MySecret").volume = 0.1;
     }
     checkMode() {
         const currentHourUtc = moment.utc().hour();
@@ -64,7 +65,7 @@ export class Chatbot extends Component {
         let output = 'Typing in';
         this.setState({output});
 
-        const numberOfDots = random(3, 6);
+        const numberOfDots = random(2, 4);
         for (let i=0; i<numberOfDots; i++) {
             await sleep();
             output = output + '.';
@@ -185,6 +186,10 @@ export class Chatbot extends Component {
                             />
                         </Col>
                     </Row>
+                    <hr />
+                    <Card title={'My Secret - G.E.M'} style={{width:'326px'}}>
+                        <audio id='MySecret' controls autoPlay={true} loop={true} src='MySecret.mp3' />
+                    </Card>
                 </Spin>
             </div>
         );

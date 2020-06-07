@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Timeline, Typography } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export class Releases extends Component {
     render() {
@@ -30,14 +30,23 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         v0.7 (2020/06/05) Add music component
                     </Timeline.Item>
-                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.8 Choose closest question's answers as AI response
+                    <Timeline.Item color='green'>
+                        v0.8 (2020/06/06) Choose closest question's answers as AI response
                     </Timeline.Item>
-                    <Timeline.Item color='grey'>
+                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
                         v0.9 Conversation export functionality
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
                         v0.10 Add blacklisted words to emulate human behavior
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        v0.11 Add feedback system to collect feature requests and issues
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        v0.12 Distribute the website using customized domain name
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        <Text strong>v1.0 Release!</Text>
                     </Timeline.Item>
                 </Timeline>
             </div>

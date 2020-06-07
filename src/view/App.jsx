@@ -16,7 +16,7 @@ export default class App extends Component {
         this.handleNavigationChange = this.handleNavigationChange.bind(this);
     }
     componentDidMount() {
-        document.getElementById("MySecret").volume = 0.1;
+        document.getElementById("MySecret").volume = 0.06;
     }
     handleNavigationChange(event) {
         this.setState({navigationKey: event.key});

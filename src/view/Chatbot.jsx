@@ -4,6 +4,7 @@ import { DislikeTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import {random} from 'lodash';
 import axios from 'axios';
+import settle from 'promise-settle';
 const { TextArea, Search } = Input;
 const { Paragraph } = Typography;
 
@@ -49,8 +50,8 @@ export class Chatbot extends Component {
             return;
         }
         this.setState({isLoading: true, input: '', inputCopy: input, output: ''});
-        await this.mockTypingIn();
-        const output = await getAIResponse(input);
+
+        const output = (await settle([getAIResponse(input), this.mockTypingIn()]))[0].value();
 
         this.setState({
             isLoading: false,

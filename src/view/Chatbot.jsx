@@ -19,12 +19,15 @@ export class Chatbot extends Component {
             canAlsoReplyInputVisible: false,
             canAlsoReplyInput: '',
             conversation: '',
-            mode: ''
+            mode: '',
+            phoneInput: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleInputPressEnter = this.handleInputPressEnter.bind(this);
         this.handleCanAlsoReplyInputChange = this.handleCanAlsoReplyInputChange.bind(this);
         this.handleCanAlsoReplyInputPressEnter = this.handleCanAlsoReplyInputPressEnter.bind(this);
+        this.handlePhoneInputChange = this.handlePhoneInputChange.bind(this);
+        this.handlePhoneInputPressEnter = this.handlePhoneInputPressEnter.bind(this);
         this.handleDislikeButtonClick = this.handleDislikeButtonClick.bind(this);
     }
 
@@ -96,6 +99,30 @@ export class Chatbot extends Component {
         message.success(`Remembered to reply "${canAlsoReplyInput}" for question "${inputCopy}"`);
     }
 
+    handlePhoneInputChange(event) {
+        this.setState({phoneInput: event.target.value});
+    }
+    async handlePhoneInputPressEnter() {
+        const {conversation, phoneInput} = this.state;
+        if (conversation.length > 240) {
+            return message.info('Cannot send conversation longer than 240 characters');
+        }
+        if (! /^\d{10}$/.test(phoneInput)) {
+            return message.info('Phone number must be 10 digits');
+        }
+        if (! (conversation && phoneInput)) {
+            return;
+        }
+        this.setState({isLoading: true});
+        await sendConversation(conversation, phoneInput);
+
+        this.setState({
+            isLoading: false,
+            phoneInput: ''
+        });
+        message.success(`Sent conversation to phone "${phoneInput}"`);
+    }
+
     async handleDislikeButtonClick() {
         const {inputCopy, output} = this.state;
         if (! (inputCopy && output)) {
@@ -116,7 +143,7 @@ export class Chatbot extends Component {
     }
 
     render() {
-        const {isLoading, input, inputCopy, output, canAlsoReplyInputVisible, canAlsoReplyInput, conversation, mode} = this.state;
+        const {isLoading, input, inputCopy, output, canAlsoReplyInputVisible, canAlsoReplyInput, conversation, mode, phoneInput} = this.state;
 
         if (mode === 'night') {
             return (
@@ -186,6 +213,22 @@ export class Chatbot extends Component {
                             />
                         </Col>
                     </Row>
+                    <Row>
+                        <Col sm={14} md={12} lg={10}>
+                            {conversation && <Paragraph style={{paddingTop:'14px'}}>
+                                <Search
+                                    value={phoneInput}
+                                    onChange={this.handlePhoneInputChange}
+                                    onPressEnter={this.handlePhoneInputPressEnter}
+                                    onSearch={this.handlePhoneInputPressEnter}
+                                    placeholder={phoneInputPlaceholder}
+                                    addonBefore={'Send conversation to: '}
+                                    prefix={'+1 '}
+                                    enterButton={'Send'}
+                                />
+                            </Paragraph>}
+                        </Col>
+                    </Row>
                 </Spin>
             </div>
         );
@@ -194,19 +237,24 @@ export class Chatbot extends Component {
 
 const inputPlaceholder = 'Try: How are you?';
 const canAlsoReplyInputPlaceholder = 'Type in what to reply';
-const conversationPlaceholder = 'Conversations will be recorded here';
+const conversationPlaceholder = 'Conversation will be recorded here';
+const phoneInputPlaceholder = 'E.g. 3522261234';
 
 async function getAIResponse(input) {
-    const response = await axios.get(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}`);
+    const response = await axios.get(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=getairesponse&input=${input}`);
     return response.data;
 }
 
 async function setAIResponse(input, output) {
-    return await axios.post(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}&output=${output}`);
+    return await axios.post(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=setairesponse&input=${input}&output=${output}`);
 }
 
 async function forgetAIResponse(input, output) {
-    return await axios.delete(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?input=${input}&output=${output}`)
+    return await axios.delete(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=forgetairesponse&input=${input}&output=${output}`)
+}
+
+async function sendConversation(conversation, phone) {
+    return await axios.post(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=sendconversation&conversation=${conversation.replace(/\n/g, '___')}&phone=${phone}`);
 }
 
 async function sleep() {

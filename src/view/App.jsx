@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Card, Row, Col } from 'antd';
-import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone } from '@ant-design/icons';
+import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
 import {Releases} from './Releases';
 import {Sponsor} from './Sponsor';
+import {Feedback} from './Feedback';
 const { Header, Content, Footer, Sider } = Layout;
 
 export default class App extends Component {
@@ -47,6 +48,9 @@ export default class App extends Component {
                         <Menu.Item key='Sponsor' icon={<DollarTwoTone twoToneColor={'#FFDF00'} style={{fontSize:'20px'}} />}>
                             Sponsor
                         </Menu.Item>
+                        <Menu.Item key='Feedback' icon={<ToolOutlined style={{fontSize:'20px'}} />}>
+                            Feedback
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -60,6 +64,7 @@ export default class App extends Component {
                                 (navigationKey === 'Releases')  ?   <Releases />    :
                                 (navigationKey === 'Resources') ?   <Resources />   :
                                 (navigationKey === 'Sponsor')   ?   <Sponsor />     :
+                                (navigationKey === 'Feedback')   ?  <Feedback />    :
                                                                     null
                             }
                         </div>

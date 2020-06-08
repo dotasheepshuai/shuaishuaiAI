@@ -83,5 +83,5 @@ export class Feedback extends Component {
 }
 
 async function sendCustomerFeedback(type, content) {
-    return await axios.post(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=setairesponse&input=feedback_${type}&output=${content}`);
+    return await axios.post(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=setairesponse&input=feedbackfeedbackfeedbackfeedback_${type}&output=${content}`);
 }

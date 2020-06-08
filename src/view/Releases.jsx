@@ -36,14 +36,20 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         v0.9 (2020/06/06) Conversation export functionality
                     </Timeline.Item>
-                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.10 Add blacklisted words to emulate human behavior
+                    <Timeline.Item color='green'>
+                        v0.10 (2020/06/08) Add blacklisted words to emulate human behavior
                     </Timeline.Item>
-                    <Timeline.Item color='grey'>
+                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
                         v0.11 Add feedback system to collect feature requests and issues
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
-                        v0.12 Distribute the website using customized domain name
+                        v0.12 Display special pages on special dates
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        v0.13 Upgrade music component to include more songs
+                    </Timeline.Item>
+                    <Timeline.Item color='grey'>
+                        v0.14 Distribute the website using customized domain name
                     </Timeline.Item>
                     <Timeline.Item color='grey'>
                         <Text strong>v1.0 BOOM!</Text>

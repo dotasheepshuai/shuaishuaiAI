@@ -49,19 +49,20 @@ export class Chatbot extends Component {
     }
     async handleInputPressEnter() {
         const {input, conversation} = this.state;
-        if (! input) {
+        const _input = input.trim();
+        if (! _input) {
             return;
         }
-        this.setState({isLoading: true, input: '', inputCopy: input, output: ''});
+        this.setState({isLoading: true, input: '', inputCopy: _input, output: ''});
 
-        const output = (await settle([getAIResponse(input), this.mockTypingIn()]))[0].value();
+        const output = (await settle([getAIResponse(_input), this.mockTypingIn()]))[0].value();
 
         this.setState({
             isLoading: false,
             output: output,
             canAlsoReplyInputVisible: false,
             canAlsoReplyInput: '',
-            conversation: `${conversation}You: ${input}\nShuaishuai: ${output}\n`
+            conversation: `${conversation}You: ${_input}\nShuaishuai: ${output}\n`
         });
     }
     async mockTypingIn() {
@@ -81,11 +82,12 @@ export class Chatbot extends Component {
     }
     async handleCanAlsoReplyInputPressEnter() {
         const {inputCopy, canAlsoReplyInput, conversation} = this.state;
-        if (! (inputCopy && canAlsoReplyInput)) {
+        const _canAlsoReplyInput = canAlsoReplyInput.trim();
+        if (! (inputCopy && _canAlsoReplyInput)) {
             return;
         }
         this.setState({isLoading: true});
-        await setAIResponse(inputCopy, canAlsoReplyInput);
+        await setAIResponse(inputCopy, _canAlsoReplyInput);
 
         this.setState({
             isLoading: false,
@@ -94,9 +96,9 @@ export class Chatbot extends Component {
             output: '',
             canAlsoReplyInputVisible: false,
             canAlsoReplyInput: '',
-            conversation: `${conversation}You: ${inputCopy}\nShuaishuai: ${canAlsoReplyInput}\n`
+            conversation: `${conversation}You: ${inputCopy}\nShuaishuai: ${_canAlsoReplyInput}\n`
         });
-        message.success(`Remembered to reply "${canAlsoReplyInput}" for question "${inputCopy}"`);
+        message.success(`Remembered to reply "${_canAlsoReplyInput}" for question "${inputCopy}"`);
     }
 
     handlePhoneInputChange(event) {
@@ -104,23 +106,24 @@ export class Chatbot extends Component {
     }
     async handlePhoneInputPressEnter() {
         const {conversation, phoneInput} = this.state;
+        const _phoneInput = phoneInput.trim();
         if (conversation.length > 240) {
             return message.info('Cannot send conversation longer than 240 characters');
         }
-        if (! /^\d{10}$/.test(phoneInput)) {
+        if (! /^\d{10}$/.test(_phoneInput)) {
             return message.info('Phone number must be 10 digits');
         }
-        if (! (conversation && phoneInput)) {
+        if (! (conversation && _phoneInput)) {
             return;
         }
         this.setState({isLoading: true});
-        await sendConversation(conversation, phoneInput);
+        await sendConversation(conversation, _phoneInput);
 
         this.setState({
             isLoading: false,
             phoneInput: ''
         });
-        message.success(`Sent conversation to phone "${phoneInput}"`);
+        message.success(`Sent conversation to phone "${_phoneInput}"`);
     }
 
     async handleDislikeButtonClick() {

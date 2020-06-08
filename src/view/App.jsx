@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Card, Row, Col } from 'antd';
-import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined } from '@ant-design/icons';
+import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined, HeartTwoTone } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
 import {Releases} from './Releases';
 import {Sponsor} from './Sponsor';
 import {Feedback} from './Feedback';
+import {Anniversary} from './Anniversary';
+import {isAnniversary} from '../common';
 const { Header, Content, Footer, Sider } = Layout;
 
-export default class App extends Component {
+export class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,12 +47,16 @@ export default class App extends Component {
                         <Menu.Item key='Resources' icon={<FolderOpenOutlined style={{fontSize:'20px'}} />}>
                             Resources
                         </Menu.Item>
-                        <Menu.Item key='Sponsor' icon={<DollarTwoTone twoToneColor={'#FFDF00'} style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Sponsor' icon={<DollarTwoTone twoToneColor={'#D4AF37'} style={{fontSize:'20px'}} />}>
                             Sponsor
                         </Menu.Item>
                         <Menu.Item key='Feedback' icon={<ToolOutlined style={{fontSize:'20px'}} />}>
                             Feedback
                         </Menu.Item>
+                        {isAnniversary() && <Menu.Item key='Anniversary' icon={<HeartTwoTone twoToneColor={'#EB2F96'} style={{fontSize:'20px'}} />}>
+                            Anniversary
+                            </Menu.Item>
+                        }
                     </Menu>
                 </Sider>
                 <Layout>
@@ -60,12 +66,13 @@ export default class App extends Component {
                     <Content>
                         <div style={{padding:'20px'}}>
                             {
-                                (navigationKey === 'Chatbot')   ?   <Chatbot />     :
-                                (navigationKey === 'Releases')  ?   <Releases />    :
-                                (navigationKey === 'Resources') ?   <Resources />   :
-                                (navigationKey === 'Sponsor')   ?   <Sponsor />     :
-                                (navigationKey === 'Feedback')   ?  <Feedback />    :
-                                                                    null
+                                (navigationKey === 'Chatbot')       ?   <Chatbot />     :
+                                (navigationKey === 'Releases')      ?   <Releases />    :
+                                (navigationKey === 'Resources')     ?   <Resources />   :
+                                (navigationKey === 'Sponsor')       ?   <Sponsor />     :
+                                (navigationKey === 'Feedback')      ?   <Feedback />    :
+                                (navigationKey === 'Anniversary')   ?   <Anniversary /> :
+                                                                        null
                             }
                         </div>
                     </Content>

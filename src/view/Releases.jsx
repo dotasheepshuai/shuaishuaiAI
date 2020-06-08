@@ -42,10 +42,10 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         v0.11 (2020/06/08) Add feedback system to collect feature requests and issues
                     </Timeline.Item>
-                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.12 Display special pages on special dates
+                    <Timeline.Item color='green'>
+                        v0.12 (2020/06/08) Display anniversary page on anniversaries
                     </Timeline.Item>
-                    <Timeline.Item color='grey'>
+                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
                         v0.13 Upgrade music component to include more songs
                     </Timeline.Item>
                     <Timeline.Item color='grey'>

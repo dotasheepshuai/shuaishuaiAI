@@ -102,7 +102,7 @@ class MusicComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isPlaying: true,
+            isPlaying: false,
             source: './music/MachineBell.mp3'
         };
         this.handleMusicChange = this.handleMusicChange.bind(this);
@@ -111,6 +111,7 @@ class MusicComponent extends Component {
 
     handleMusicChange(value) {
         document.getElementById('pauseResume').classList.add('anticon-spin');
+        document.getElementById('audio').play();
         this.setState({
             isPlaying: true,
             source: `./music/${value}.mp3`
@@ -122,11 +123,12 @@ class MusicComponent extends Component {
         if (isPlaying) {
             document.getElementById('pauseResume').classList.remove('anticon-spin');
             document.getElementById('audio').pause();
+            this.setState({isPlaying: false});
         } else {
             document.getElementById('pauseResume').classList.add('anticon-spin');
             document.getElementById('audio').play();
+            this.setState({isPlaying: true});
         }
-        this.setState({isPlaying: !isPlaying});
     }
 
     componentDidMount() {
@@ -152,7 +154,7 @@ class MusicComponent extends Component {
                     </Select>
                     <Button
                         type='link'
-                        icon={<CustomerServiceTwoTone id='pauseResume' className='anticon-spin' twoToneColor={'#4CBB17'} style={{fontSize:'28px'}} />}
+                        icon={<CustomerServiceTwoTone id='pauseResume' twoToneColor={'#4CBB17'} style={{fontSize:'28px'}} />}
                         style={{width:'60px',height:'auto'}}
                         onClick={this.handlePauseResume}
                     />

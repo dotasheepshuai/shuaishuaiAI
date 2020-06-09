@@ -52,7 +52,7 @@ export class Releases extends Component {
                         v0.14 [2020/06/08] Distribute the website using customized domain name
                     </Timeline.Item>
                     <Timeline.Item color='green'>
-                        <Text strong>v1.0 [2020/06/08] LAUNCH!</Text>{Components.Rocket}
+                        <Text strong>v1.0 [2020/06/09] LAUNCH!</Text>{Components.Rocket}
                     </Timeline.Item>
                     <Timeline.Item dot={Components.Loading}>
                         What's next... submit a request!

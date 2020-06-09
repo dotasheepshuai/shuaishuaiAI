@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Card, Row, Col } from 'antd';
-import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined, HeartTwoTone } from '@ant-design/icons';
+import { Layout, Menu, Card, Row, Col, Select, Button } from 'antd';
+import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined, HeartTwoTone, CustomerServiceTwoTone } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
 import {Releases} from './Releases';
@@ -9,6 +9,7 @@ import {Feedback} from './Feedback';
 import {Anniversary} from './Anniversary';
 import {isAnniversary} from '../common';
 const { Header, Content, Footer, Sider } = Layout;
+const { Option } = Select;
 
 export class App extends Component {
     constructor(props) {
@@ -17,9 +18,6 @@ export class App extends Component {
             navigationKey: 'Chatbot'
         };
         this.handleNavigationChange = this.handleNavigationChange.bind(this);
-    }
-    componentDidMount() {
-        document.getElementById("MySecret").volume = 0.06;
     }
     handleNavigationChange(event) {
         this.setState({navigationKey: event.key});
@@ -79,9 +77,7 @@ export class App extends Component {
                     <Footer>
                         <Row>
                             <Col span={8}>
-                                <Card title={'My Secret - G.E.M'} style={{width:'326px',height:'114px'}}>
-                                    <audio id='MySecret' controls autoPlay={true} loop={true} src='MySecret.mp3' />
-                                </Card>
+                                <MusicComponent />
                             </Col>
                             <Col span={8}>
                                 <div style={{textAlign:'center'}}>
@@ -97,6 +93,71 @@ export class App extends Component {
                     </Footer>
                 </Layout>
             </Layout>
+        );
+    }
+}
+
+class MusicComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isPlaying: true,
+            source: './music/MachineBell.mp3'
+        };
+        this.handleMusicChange = this.handleMusicChange.bind(this);
+        this.handlePauseResume = this.handlePauseResume.bind(this);
+    }
+
+    handleMusicChange(value) {
+        document.getElementById('pauseResume').classList.add('anticon-spin');
+        this.setState({
+            isPlaying: true,
+            source: `./music/${value}.mp3`
+        });
+    }
+
+    handlePauseResume() {
+        const {isPlaying} = this.state;
+        if (isPlaying) {
+            document.getElementById('pauseResume').classList.remove('anticon-spin');
+            document.getElementById('audio').pause();
+        } else {
+            document.getElementById('pauseResume').classList.add('anticon-spin');
+            document.getElementById('audio').play();
+        }
+        this.setState({isPlaying: !isPlaying});
+    }
+
+    componentDidMount() {
+        document.getElementById('audio').volume = 0.06;
+    }
+
+    render() {
+        const {source} = this.state;
+        return (
+            <div>
+                <Card title={'Music'} style={{width:'300px',height:'114px'}}>
+                    <Select showSearch style={{width:'200px'}} defaultValue={'MachineBell'} onChange={this.handleMusicChange} placeholder='Choose a song'>
+                        <Option value='Drenched'>Drenched - Wanting Qu</Option>
+                        <Option value='LoveCourage'>Love Courage - Wanting Qu</Option>
+                        <Option value='MachineBell'>Machine Bell - Wei Zhang</Option>
+                        <Option value='MySecret'>My Secret - G.E.M</Option>
+                        <Option value='MySky'>My Sky - NZBZ</Option>
+                        <Option value='NobodyIsland'>Nobody Island - Ran Ren</Option>
+                        <Option value='OneDay'>One Day - Matisyahu</Option>
+                        <Option value='PeopleSea'>People Sea - Chi Yan</Option>
+                        <Option value='SeeYou'>See You - G.E.M</Option>
+                        <Option value='SummerWind'>Summer Wind - Lan Wen</Option>
+                    </Select>
+                    <Button
+                        type='link'
+                        icon={<CustomerServiceTwoTone id='pauseResume' className='anticon-spin' twoToneColor={'#4CBB17'} style={{fontSize:'28px'}} />}
+                        style={{width:'60px',height:'auto'}}
+                        onClick={this.handlePauseResume}
+                    />
+                    <audio id='audio' autoPlay={true} loop={true} src={source} />
+                </Card>
+            </div>
         );
     }
 }

@@ -182,7 +182,7 @@ export class Chatbot extends Component {
                                 {output && (! output.startsWith('Typing in')) && <Button
                                     type='link'
                                     icon={<DislikeTwoTone twoToneColor={'#FF0000'} style={{fontSize:'20px'}} />}
-                                    style={{paddingLeft:'14px'}}
+                                    style={{width:'60px'}}
                                     onClick={this.handleDislikeButtonClick}
                                 />}
                             </Paragraph>

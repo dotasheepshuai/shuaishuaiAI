@@ -52,7 +52,7 @@ export class Feedback extends Component {
                     <Title level={3}>Feedback</Title>
                     <Row>
                         <Col span={24}>
-                            <Select style={{width: 200}} onChange={this.handleTypeChange} placeholder='Choose a type'>
+                            <Select style={{width:'200px'}} onChange={this.handleTypeChange} placeholder='Choose a type'>
                                 <Option value='featureRequest'>Feature Request</Option>
                                 <Option value='issues'>Issues</Option>
                             </Select>

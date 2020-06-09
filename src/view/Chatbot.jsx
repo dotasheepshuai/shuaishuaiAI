@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Input, Typography, Button, message, Row, Col, Spin, Empty } from 'antd';
-import { DislikeTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import {random} from 'lodash';
 import axios from 'axios';
 import settle from 'promise-settle';
+import {Components} from '../constants';
 const { TextArea, Search } = Input;
 const { Paragraph } = Typography;
 
@@ -181,7 +181,7 @@ export class Chatbot extends Component {
                                 Shuaishuai: {output}
                                 {output && (! output.startsWith('Typing in')) && <Button
                                     type='link'
-                                    icon={<DislikeTwoTone twoToneColor={'#FF0000'} style={{fontSize:'20px'}} />}
+                                    icon={Components.Dislike}
                                     style={{width:'60px'}}
                                     onClick={this.handleDislikeButtonClick}
                                 />}

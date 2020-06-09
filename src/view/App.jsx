@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Card, Row, Col, Select, Button } from 'antd';
-import { AudioTwoTone, HistoryOutlined, FolderOpenOutlined, DollarTwoTone, ToolOutlined, HeartTwoTone, CustomerServiceTwoTone } from '@ant-design/icons';
+import { CustomerServiceTwoTone } from '@ant-design/icons';
 import {Chatbot} from './Chatbot';
 import {Resources} from './Resources';
 import {Releases} from './Releases';
@@ -8,6 +8,7 @@ import {Sponsor} from './Sponsor';
 import {Feedback} from './Feedback';
 import {Anniversary} from './Anniversary';
 import {isAnniversary} from '../common';
+import {Components} from '../constants';
 const { Header, Content, Footer, Sider } = Layout;
 const { Option } = Select;
 
@@ -36,22 +37,22 @@ export class App extends Component {
                           style={{fontSize:'14px',paddingTop:'20px'}}
                           onClick={this.handleNavigationChange}
                     >
-                        <Menu.Item key='Chatbot' icon={<AudioTwoTone style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Chatbot' icon={Components.Audio}>
                             Chatbot
                         </Menu.Item>
-                        <Menu.Item key='Releases' icon={<HistoryOutlined style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Releases' icon={Components.History}>
                             Releases
                         </Menu.Item>
-                        <Menu.Item key='Resources' icon={<FolderOpenOutlined style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Resources' icon={Components.Folder}>
                             Resources
                         </Menu.Item>
-                        <Menu.Item key='Sponsor' icon={<DollarTwoTone twoToneColor={'#D4AF37'} style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Sponsor' icon={Components.Dollar}>
                             Sponsor
                         </Menu.Item>
-                        <Menu.Item key='Feedback' icon={<ToolOutlined style={{fontSize:'20px'}} />}>
+                        <Menu.Item key='Feedback' icon={Components.Tool}>
                             Feedback
                         </Menu.Item>
-                        {isAnniversary() && <Menu.Item key='Anniversary' icon={<HeartTwoTone twoToneColor={'#EB2F96'} style={{fontSize:'20px'}} />}>
+                        {isAnniversary() && <Menu.Item key='Anniversary' icon={Components.Heart}>
                             Anniversary
                             </Menu.Item>
                         }

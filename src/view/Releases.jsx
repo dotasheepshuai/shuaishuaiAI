@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Timeline, Typography } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import {Components} from '../constants';
 const { Title, Text } = Typography;
 
 export class Releases extends Component {
@@ -48,13 +48,13 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         v0.13 [2020/06/08] Upgrade music component to include more songs
                     </Timeline.Item>
-                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
-                        v0.14 Distribute the website using customized domain name
+                    <Timeline.Item color='green'>
+                        v0.14 [2020/06/08] Distribute the website using customized domain name
                     </Timeline.Item>
-                    <Timeline.Item color='grey'>
-                        <Text strong>v1.0 BOOM!</Text>
+                    <Timeline.Item color='green'>
+                        <Text strong>v1.0 [2020/06/08] LAUNCH!</Text>{Components.Rocket}
                     </Timeline.Item>
-                    <Timeline.Item dot={<LoadingOutlined spin style={{fontSize:'20px',backgroundColor:'rgb(240,242,245)'}} />}>
+                    <Timeline.Item dot={Components.Loading}>
                         What's next... submit a request!
                     </Timeline.Item>
                 </Timeline>

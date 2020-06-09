@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Row, Col} from 'antd';
-import { CrownTwoTone, StarTwoTone, HeartTwoTone, RocketTwoTone } from '@ant-design/icons';
 import {getAnniversaryDetails} from '../common';
+import {Components} from '../constants';
 const { Title, Paragraph } = Typography;
 
 export class Anniversary extends Component {
@@ -31,7 +31,7 @@ class ShuaishuaiBirthday extends Component {
         return (
             <div>
                 <Paragraph>
-                    A pretty girl named Shuaishuai{crown} was born {years} years ago, on {date}. Let's wish her a happy birthday!{star}
+                    A pretty girl named Shuaishuai{Components.Crown} was born {years} years ago, on {date}. Let's wish her a happy birthday!{Components.Star}
                 </Paragraph>
             </div>
         );
@@ -44,7 +44,7 @@ class FatsheepBirthday extends Component {
         return (
             <div>
                 <Paragraph>
-                    A handsome boy named Fatsheep{crown} was born {years} years ago, on {date}. Let's wish him a happy birthday!{star}
+                    A handsome boy named Fatsheep{Components.Crown} was born {years} years ago, on {date}. Let's wish him a happy birthday!{Components.Star}
                 </Paragraph>
             </div>
         );
@@ -57,7 +57,7 @@ class FirstConversation extends Component {
         return (
             <div>
                 <Paragraph>
-                    I still remember the first day when I met Shuaishuai{heart} on Dizhua. We had a great conversation, and that was on {date}, {years} years ago.
+                    I still remember the first day when I met Shuaishuai{Components.Heart} on Dizhua. We had a great conversation, and that was on {date}, {years} years ago.
                 </Paragraph>
             </div>
         );
@@ -70,17 +70,12 @@ class VersionOneLaunch extends Component {
         return (
             <div>
                 <Paragraph>
-                    Shuaishuai AI v1.0 was launched{rocket} on {date}. {years} years have passed since then!
+                    Shuaishuai AI v1.0 was launched{Components.Rocket} on {date}. {years} years have passed since then!
                 </Paragraph>
             </div>
         );
     }
 }
-
-const crown = <CrownTwoTone twoToneColor={'#D4AF37'} style={{fontSize:'20px'}} />;
-const star = <StarTwoTone twoToneColor={'#FFD700'} style={{fontSize:'20px'}} />;
-const heart = <HeartTwoTone twoToneColor={'#EB2F96'} style={{fontSize:'20px'}} />;
-const rocket = <RocketTwoTone twoToneColor={'#800080'} style={{fontSize:'20px'}} />;
 
 const StringToComponent = {
     ShuaishuaiBirthday: ShuaishuaiBirthday,

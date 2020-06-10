@@ -78,7 +78,7 @@ export class App extends Component {
                     <Footer>
                         <Row>
                             <Col span={8}>
-                                <MusicComponent />
+                                {/*<MusicComponent />*/}
                             </Col>
                             <Col span={8}>
                                 <div style={{textAlign:'center'}}>

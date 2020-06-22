@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Row, Col, message, Spin, Input } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
+import {Components} from '../constants';
 const { Search } = Input;
 const { Title, Paragraph } = Typography;
 
@@ -43,7 +44,7 @@ export class FirstTimes extends Component {
             return;
         }
         this.setState({isLoading: true});
-        await sendFirstTimes('shuaishuai', `${content}___${moment().format('YYYY-MM-DD')}`);
+        await sendFirstTimes('shuaishuai', `${moment().format('YYYY-MM-DD')}___${content}`);
         await this.refreshFirstTimes();
 
         this.setState({
@@ -64,7 +65,7 @@ export class FirstTimes extends Component {
             return;
         }
         this.setState({isLoading: true});
-        await sendFirstTimes('fatsheep', `${content}___${moment().format('YYYY-MM-DD')}`);
+        await sendFirstTimes('fatsheep', `${moment().format('YYYY-MM-DD')}___${content}`);
         await this.refreshFirstTimes();
 
         this.setState({
@@ -72,6 +73,14 @@ export class FirstTimes extends Component {
             fatsheepFirstTimesInput: ''
         });
         message.success(`Fatsheep's first time has been recorded!`);
+    }
+
+    getCrown(myFirstTimes, otherFirstTimes) {
+        if (myFirstTimes.length >= otherFirstTimes.length) {
+            return Components.Crown;
+        } else {
+            return undefined;
+        }
     }
 
     render() {
@@ -109,8 +118,9 @@ export class FirstTimes extends Component {
                         </Col>
                     </Row>
                     <hr />
-                    <Paragraph level={3}>Shuaishuai has recorded {shuaishuaiFirstTimes.length} first times with Fatsheep~</Paragraph>
-                    <Paragraph level={3}>Fatsheep has recorded {fatsheepFirstTimes.length} first times with Shuaishuai~</Paragraph>
+                    <Paragraph level={3}>Shuaishuai{this.getCrown(shuaishuaiFirstTimes, fatsheepFirstTimes)} has recorded {shuaishuaiFirstTimes.length} first times so far...</Paragraph>
+                    <Paragraph level={3}>Fatsheep{this.getCrown(fatsheepFirstTimes, shuaishuaiFirstTimes)} has recorded {fatsheepFirstTimes.length} first times so far...</Paragraph>
+                    <Paragraph level={3}>More details will be unveiled on First Times Day{Components.Star}</Paragraph>
                 </Spin>
             </div>
         );

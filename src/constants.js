@@ -13,6 +13,7 @@ import {
     LoadingOutlined
 } from '@ant-design/icons';
 
+// Keep in sync with backend
 export const Anniversaries = [
     {
         componentName: 'ShuaishuaiBirthday',

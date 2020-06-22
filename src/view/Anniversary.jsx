@@ -106,8 +106,8 @@ class FirstTimesDay extends Component {
         const ssFirstTimes = shuaishuaiFirstTimes.map((shuaishuaiFirstTime) => {
             const object = shuaishuaiFirstTime.split('___');
             return {
-                content: object[0],
-                date: object[1]
+                date: object[0],
+                content: object[1]
             };
         }).filter((shuaishuaiFirstTime) => {
             return moment(shuaishuaiFirstTime.date).isAfter(OneYearAgo)
@@ -115,8 +115,8 @@ class FirstTimesDay extends Component {
         const fsFirstTimes = fatsheepFirstTimes.map((fatsheepFirstTime) => {
             const object = fatsheepFirstTime.split('___');
             return {
-                content: object[0],
-                date: object[1]
+                date: object[0],
+                content: object[1]
             };
         }).filter((fatsheepFirstTime) => {
             return moment(fatsheepFirstTime.date).isAfter(OneYearAgo)
@@ -125,7 +125,7 @@ class FirstTimesDay extends Component {
         return (
             <div>
                 <Paragraph>
-                    Today is the {years+1}-th First Times Day{Components.Heart} Throughout the past year, Shuaishuai has recorded {ssFirstTimes.length} first times with Fatsheep, and Fatsheep has recorded {fsFirstTimes.length} first times with Shuaishuai~
+                    Today is the {years+1}-th First Times Day{Components.Star} Throughout the past year, Shuaishuai recorded {ssFirstTimes.length} first times, and Fatsheep recorded {fsFirstTimes.length} first times!
                 </Paragraph>
                 <Row>
                     <Col span={12}>

@@ -54,6 +54,9 @@ export class Releases extends Component {
                     <Timeline.Item color='green'>
                         <Text strong>v1.0 [2020/06/09] LAUNCH!</Text>{Components.Rocket}
                     </Timeline.Item>
+                    <Timeline.Item color='green'>
+                        v1.1 [2020/06/22] Add first times page to record and display first times
+                    </Timeline.Item>
                     <Timeline.Item dot={Components.Loading}>
                         What's next... submit a request!
                     </Timeline.Item>

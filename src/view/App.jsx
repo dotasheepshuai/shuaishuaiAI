@@ -6,6 +6,7 @@ import {Resources} from './Resources';
 import {Releases} from './Releases';
 import {Sponsor} from './Sponsor';
 import {Feedback} from './Feedback';
+import {FirstTimes} from './FirstTimes';
 import {Anniversary} from './Anniversary';
 import {isAnniversary} from '../common';
 import {Components} from '../constants';
@@ -52,6 +53,9 @@ export class App extends Component {
                         <Menu.Item key='Feedback' icon={Components.Tool}>
                             Feedback
                         </Menu.Item>
+                        <Menu.Item key='FirstTimes' icon={Components.Heart}>
+                            First Times
+                        </Menu.Item>
                         {isAnniversary() && <Menu.Item key='Anniversary' icon={Components.Heart}>
                             Anniversary
                             </Menu.Item>
@@ -70,6 +74,7 @@ export class App extends Component {
                                 (navigationKey === 'Resources')     ?   <Resources />   :
                                 (navigationKey === 'Sponsor')       ?   <Sponsor />     :
                                 (navigationKey === 'Feedback')      ?   <Feedback />    :
+                                (navigationKey === 'FirstTimes')    ?   <FirstTimes />  :
                                 (navigationKey === 'Anniversary')   ?   <Anniversary /> :
                                                                         null
                             }

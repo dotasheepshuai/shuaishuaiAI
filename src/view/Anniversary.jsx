@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import { Typography, Row, Col} from 'antd';
 import {getAnniversaryDetails} from '../common';
 import {Components} from '../constants';
+import axios from 'axios';
+import moment from 'moment';
 const { Title, Paragraph } = Typography;
+const OneYearAgo = moment().subtract(1, 'year');
 
 export class Anniversary extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            shuaishuaiFirstTimes: [],
+            fatsheepFirstTimes: []
+        };
+    }
+    async componentDidMount() {
+        this.setState({
+            shuaishuaiFirstTimes: await readFirstTimes('shuaishuai'),
+            fatsheepFirstTimes: await readFirstTimes('fatsheep')
+        });
+    }
+
     render() {
+        const {shuaishuaiFirstTimes, fatsheepFirstTimes} = this.state;
         const anniversaryDetails = getAnniversaryDetails();
         return (
             <div>
@@ -15,7 +33,12 @@ export class Anniversary extends Component {
                     return (
                         <Row key={index} style={{paddingTop:'14px'}}>
                             <Col span={24}>
-                                {<AnniversaryComponent date={anniversary.date} years={anniversary.years} />}
+                                {<AnniversaryComponent
+                                    date={anniversary.date}
+                                    years={anniversary.years}
+                                    shuaishuaiFirstTimes={shuaishuaiFirstTimes}
+                                    fatsheepFirstTimes={fatsheepFirstTimes}
+                                />}
                             </Col>
                         </Row>
                     );
@@ -77,9 +100,69 @@ class VersionOneLaunch extends Component {
     }
 }
 
+class FirstTimesDay extends Component {
+    render() {
+        const {years, shuaishuaiFirstTimes, fatsheepFirstTimes} = this.props;
+        const ssFirstTimes = shuaishuaiFirstTimes.map((shuaishuaiFirstTime) => {
+            const object = shuaishuaiFirstTime.split('___');
+            return {
+                content: object[0],
+                date: object[1]
+            };
+        }).filter((shuaishuaiFirstTime) => {
+            return moment(shuaishuaiFirstTime.date).isAfter(OneYearAgo)
+        });
+        const fsFirstTimes = fatsheepFirstTimes.map((fatsheepFirstTime) => {
+            const object = fatsheepFirstTime.split('___');
+            return {
+                content: object[0],
+                date: object[1]
+            };
+        }).filter((fatsheepFirstTime) => {
+            return moment(fatsheepFirstTime.date).isAfter(OneYearAgo)
+        });
+
+        return (
+            <div>
+                <Paragraph>
+                    Today is the {years+1}-th First Times Day{Components.Heart} Throughout the past year, Shuaishuai has recorded {ssFirstTimes.length} first times with Fatsheep, and Fatsheep has recorded {fsFirstTimes.length} first times with Shuaishuai~
+                </Paragraph>
+                <Row>
+                    <Col span={12}>
+                        <Title level={4}>Shuaishuai:</Title>
+                        {ssFirstTimes.map((ssFirstTime, index) => {
+                            return (
+                                <Paragraph key={index}>
+                                    {moment(ssFirstTime.date).format('YYYY-MM-DD')} - {ssFirstTime.content}
+                                </Paragraph>
+                            );
+                        })}
+                    </Col>
+                    <Col span={12}>
+                        <Title level={4}>Fatsheep:</Title>
+                        {fsFirstTimes.map((fsFirstTime, index) => {
+                            return (
+                                <Paragraph key={index}>
+                                    {moment(fsFirstTime.date).format('YYYY-MM-DD')} - {fsFirstTime.content}
+                                </Paragraph>
+                            );
+                        })}
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
+}
+
 const StringToComponent = {
     ShuaishuaiBirthday: ShuaishuaiBirthday,
     FatsheepBirthday: FatsheepBirthday,
     FirstConversation: FirstConversation,
-    VersionOneLaunch: VersionOneLaunch
+    VersionOneLaunch: VersionOneLaunch,
+    FirstTimesDay: FirstTimesDay
 };
+
+async function readFirstTimes(person) {
+    const response = await axios.get(`https://bhrd8g11q3.execute-api.us-east-2.amazonaws.com/test?type=getfirsttimes&input=firsttimesfirsttimes_${person}`);
+    return response.data;
+}

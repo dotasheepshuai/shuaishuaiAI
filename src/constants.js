@@ -29,6 +29,10 @@ export const Anniversaries = [
     {
         componentName: 'VersionOneLaunch',
         date: '2020-06-09'
+    },
+    {
+        componentName: 'FirstTimesDay',
+        date: '2020-12-18'
     }
 ];
 

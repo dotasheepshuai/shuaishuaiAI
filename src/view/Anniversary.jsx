@@ -125,7 +125,7 @@ class FirstTimesDay extends Component {
         return (
             <div>
                 <Paragraph>
-                    Today is the {years+1}-th First Times Day{Components.Star} Throughout the past year, Shuaishuai recorded {ssFirstTimes.length} first times, and Fatsheep recorded {fsFirstTimes.length} first times!
+                    Today is the {years+1}-th First Times Day{Components.Star} Throughout the past year, Shuaishuai has recorded {ssFirstTimes.length} first times, and Fatsheep has recorded {fsFirstTimes.length} first times!
                 </Paragraph>
                 <Row>
                     <Col span={12}>
